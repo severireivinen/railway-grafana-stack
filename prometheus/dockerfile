@@ -1,11 +1,13 @@
 ARG VERSION=v3.2.1
 
+FROM alpine:3.21 AS builder
+RUN apk add --no-cache gettext
+
 FROM prom/prometheus:${VERSION}
 
 USER root
 
-# Install gettext for envsubst
-RUN apk add --no-cache gettext
+COPY --from=builder /usr/bin/envsubst /usr/local/bin/envsubst
 
 # Copy config template and entrypoint
 COPY prom.yml /etc/prometheus/prom.yml.template
