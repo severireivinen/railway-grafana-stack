@@ -9,7 +9,7 @@ scrape_configs:
   - job_name: 'voima-api'
     scheme: http
     static_configs:
-      - targets: ['voima-api.railway.internal:4000']
+      - targets: ['voima.railway.internal:4000']
     metrics_path: '/metrics'
     basic_auth:
       username: ${VOIMA_METRICS_USER}
