@@ -1,14 +1,13 @@
-ARG VERSION=v3.2.1
 FROM alpine:3.21 AS builder
-# Install gettext to get envsubst
 RUN apk add --no-cache gettext
 
-FROM prom/prometheus:${VERSION}
+FROM prom/prometheus:v3.10.0
 USER root
 
-# We copy the binary, but we also have to hope the Busybox environment 
-# has the required C libraries. If this still fails, Option 1 is your best bet.
+# Copy envsubst AND the required libraries
 COPY --from=builder /usr/bin/envsubst /usr/local/bin/envsubst
+COPY --from=builder /usr/lib/libintl.so* /usr/lib/
+COPY --from=builder /usr/lib/libunistring.so* /usr/lib/
 
 COPY prom.yml /etc/prometheus/prom.yml.template
 COPY entrypoint.sh /entrypoint.sh
