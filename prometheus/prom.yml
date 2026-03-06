@@ -15,6 +15,12 @@ scrape_configs:
       username: ${VOIMA_METRICS_USER}
       password: ${VOIMA_METRICS_PASSWORD}
 
+  - job_name: 'n8n-worker'
+    scheme: http
+    static_configs:
+      - targets: ['worker.railway.internal:5678']
+    metrics_path: '/metrics'
+
   # ? TODO: add more services here
   # - job_name: 'your-job-name'
   #   scheme: https
