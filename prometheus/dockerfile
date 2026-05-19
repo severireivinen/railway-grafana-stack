@@ -1,5 +1,14 @@
 FROM prom/prometheus:v3.10.0
 
-COPY prom.yml /etc/prometheus/prom.yml
+# Copy your config template file
+COPY prom.yml /etc/prometheus/prom.template.yml
 
-CMD ["--config.file=/etc/prometheus/prom.yml", "--storage.tsdb.path=/prometheus"]
+# Copy and set up the startup script
+COPY entrypoint.sh /entrypoint.sh
+USER root
+RUN chmod +x /entrypoint.sh
+
+# Change back to the default unprivileged user that Prometheus runs as
+USER nobody
+
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
