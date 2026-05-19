@@ -9,7 +9,7 @@ scrape_configs:
   - job_name: 'atlas'
     scheme: http
     static_configs:
-      - targets: ['atlas.railway.internal:8080']
+      - targets: ['atlas.railway.internal:4000']
     metrics_path: '/metrics'
     basic_auth:
       username: ${ATLAS_METRICS_USER}
