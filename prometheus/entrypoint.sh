@@ -22,4 +22,5 @@ awk '{
 }' /etc/prometheus/prom.template.yml > /tmp/prom.yml
 
 # Start Prometheus as PID 1 so it handles shutdown signals properly
-exec /bin/prometheus --config.file=/tmp/prom.yml --storage.tsdb.path=/prometheus
+# Railway injects $PORT and health-checks it; fall back to 9090 for local dev
+exec /bin/prometheus --config.file=/tmp/prom.yml --storage.tsdb.path=/prometheus --web.listen-address=:${PORT:-9090}
