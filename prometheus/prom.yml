@@ -15,6 +15,15 @@ scrape_configs:
       username: ${VOIMA_METRICS_USER}
       password: ${VOIMA_METRICS_PASSWORD}
 
+  - job_name: 'atlas'
+    scheme: http
+    static_configs:
+      - targets: ['atlas.railway.internal:8080']
+    metrics_path: '/metrics'
+    basic_auth:
+      username: ${ATLAS_METRICS_USER}
+      password: ${ATLAS_METRICS_PASSWORD}
+
   - job_name: 'n8n-worker'
     scheme: http
     static_configs:
