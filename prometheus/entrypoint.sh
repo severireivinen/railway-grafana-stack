@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 # Validate required environment variables before substitution
 _required_vars="ATLAS_METRICS_USER ATLAS_METRICS_PASSWORD"
@@ -18,7 +19,7 @@ awk '{
     $0 = substr($0, 1, RSTART-1) val substr($0, RSTART+RLENGTH)
   }
   print
-}' /etc/prometheus/prom.template.yml > /etc/prometheus/prom.yml
+}' /etc/prometheus/prom.template.yml > /tmp/prom.yml
 
 # Start Prometheus as PID 1 so it handles shutdown signals properly
-exec /bin/prometheus --config.file=/etc/prometheus/prom.yml --storage.tsdb.path=/prometheus
+exec /bin/prometheus --config.file=/tmp/prom.yml --storage.tsdb.path=/prometheus
