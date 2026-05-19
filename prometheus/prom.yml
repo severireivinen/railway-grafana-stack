@@ -6,15 +6,6 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'voima-api'
-    scheme: http
-    static_configs:
-      - targets: ['voima.railway.internal:4000']
-    metrics_path: '/metrics'
-    basic_auth:
-      username: ${VOIMA_METRICS_USER}
-      password: ${VOIMA_METRICS_PASSWORD}
-
   - job_name: 'atlas'
     scheme: http
     static_configs:
